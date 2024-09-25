@@ -12,54 +12,6 @@ namespace BattleArena
         Player player;
         Character enemy;
         private bool _gameOver = false;
-
-        // keeping this here just in case i need it
-        private int GetInput(string description, string option1, string option2)
-        {
-            ConsoleKeyInfo key;
-            int inputRecieved = 0;
-
-            while (inputRecieved != 1 && inputRecieved != 2)
-            {
-                // Print options
-                Console.Clear();
-                Console.WriteLine(description);
-                Console.WriteLine("1. " + option1);
-                Console.WriteLine("2. " + option2);
-                Console.Write("> ");
-
-                // get input from player
-                key = Console.ReadKey();
-
-                // if first option
-                if (key.KeyChar == '1')
-                {
-                    // set input recieved to 1
-                    inputRecieved = 1;
-                }
-                // otherwise if second option
-                else if (key.KeyChar == '2')
-                {
-                    // set input recieved to 2
-                    inputRecieved = 2;
-                }
-                // else neither
-                else
-                {
-                    // display error message (m,y favrite mmmm)
-                    Console.WriteLine("\nInvalid Input");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-
-            }
-
-            // return the input recieved after the loop
-            Console.WriteLine();
-            return inputRecieved;
-        }
-
-
         private int GetInput(string description, string[] options)
         {
             ConsoleKeyInfo key;
