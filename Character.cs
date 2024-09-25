@@ -9,11 +9,21 @@ namespace BattleArena
 {
     internal class Character
     {
+
         private string _name = "Character";
         private float _health = 10.0f;
         private float _maxHealth = 10.0f;
         private float _attackPower = 1.0f;
         private float _defensePower = 1.0f;
+
+        public Character()
+        {
+            _name = "Character";
+            _health = 10.0f;
+            _maxHealth = 10.0f;
+            _attackPower = 1.0f;
+            _defensePower = 1.0f;
+        }
 
         public float Health
         {

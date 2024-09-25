@@ -97,12 +97,24 @@ namespace BattleArena
                 {
                     // set input recieved to num
                     inputRecieved = num;
-                    Console.WriteLine();
+
+                    // if the amount of options are less than 9, write an empty line
+                    if (options.Length < 9)
+                    {
+                        Console.WriteLine();  
+                    }
+                   
                 }
                 // otherwise, print an error message
                 else
                 {
-                    Console.WriteLine("\nInvalid Input");
+
+                    // if the amount of options are less than 9, write an empty line
+                    if (options.Length < 9)
+                    {
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine("Invalid Input");
                     Console.ReadKey();
                 }
             }
@@ -111,7 +123,7 @@ namespace BattleArena
 
         private void Start()
         {
-            int input = GetInput("test desc", new string[] {"test", "other test", "really cool test", "test 4", "test 5", "Test6", "TEST 7", "test 8", "test 9", "test 10", "test 11"});
+            int input = GetInput("test desc", new string[] {"test", "other test", "really cool test", "test 4", "test 5", "Test6", "TEST 7", "test 8", "test 9", "test 10", "test 11", "test 12"});
             Console.WriteLine(input);
 
             player = new Character(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
