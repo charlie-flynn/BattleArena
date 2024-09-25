@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -15,6 +16,7 @@ namespace BattleArena
         private float _maxHealth = 10.0f;
         private float _attackPower = 1.0f;
         private float _defensePower = 1.0f;
+        private bool _isDead = false;
 
         public Character()
         {
@@ -23,19 +25,8 @@ namespace BattleArena
             _maxHealth = 10.0f;
             _attackPower = 1.0f;
             _defensePower = 1.0f;
+            _isDead = false;
         }
-
-        public float Health
-        {
-            // gets the health variable
-            get => _health;
-            // set the health to what it is as long as it's above 0
-            private set { _health = Math.Clamp(value, 0, _maxHealth); }
-        }
-        public float MaxHealth { get { return _maxHealth; } }
-        public float AttackPower { get { return _attackPower; } }
-        public float DefensePower { get { return _defensePower; } }
-        public string Name { get { return _name; } }
 
         public Character(string name, float maxHealth, float attackPower, float defensePower)
         {
@@ -44,9 +35,25 @@ namespace BattleArena
             _health = maxHealth;
             _attackPower = attackPower;
             _defensePower = defensePower;
+            _isDead = false;
         }
 
-        public float Attack(Character target)
+        public float Health
+        {
+            // gets the health variable
+            get => _health;
+            // set the health to what it is as long as it's above 0
+            protected set { _health = Math.Clamp(value, 0, _maxHealth); }
+        }
+        public float MaxHealth { get { return _maxHealth; } protected set { } }
+        public float AttackPower { get { return _attackPower; } protected set { } }
+        public float DefensePower { get { return _defensePower; } protected set { } }
+        public string Name { get { return _name; } protected set { } }
+        public bool IsDead { get { return _isDead; } protected set { } }
+
+
+
+        public virtual float Attack(Character target)
         {
             float damage = Math.Max(0, _attackPower - target.DefensePower);
             Console.WriteLine(Name + " attacked " + target.Name + " for " + damage + " damage!");
@@ -60,7 +67,7 @@ namespace BattleArena
             return damage;
         }
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             Health -= damage;
             if (Health == 0)
@@ -79,6 +86,7 @@ namespace BattleArena
         private void Die()
         {
             Console.WriteLine(Name + " has died!");
+            _isDead = true;
         }
 
         public void PrintStats()
