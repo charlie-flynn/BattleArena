@@ -31,9 +31,10 @@ namespace BattleArena
         }
         public override float Attack(Character target)
         {
+            // do a regular attack
             float damage = base.Attack(target);
 
-            // heal for half the damage dealt
+            // then heal for half the damage dealt
             Heal(damage / 2);
 
             return damage;

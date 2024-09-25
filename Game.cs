@@ -123,10 +123,15 @@ namespace BattleArena
 
         private void Start()
         {
+
+            // ask the player what enemy they want to fight
             int input = GetInput("Choose your opponent!", new string[] { "The Weakling", "The Vampire", "The Charger" });
 
             player = new Player(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
 
+
+            // if they chose 1, bring out the weakling whose name is Wimpy Wartrew and has 100 health, 9 attack, and 0 defense
+            // if they choose 2, bring out the vampire whose name is dracula 2, has 100 health, etc. etc. etc.
             if (input == 1)
             {
                 enemy = new Weakling(name: "Wimpy Wartrew", maxHealth: 100, attackPower: 9, defensePower: 0);
@@ -140,6 +145,7 @@ namespace BattleArena
                 enemy = new Charger(name: "USB-C You In Hell", maxHealth: 100, attackPower: 18, defensePower: 5);
             }
 
+            // print the player's stats, and the enemy's stats
             player.PrintStats();
             Console.WriteLine();
             enemy.PrintStats();
@@ -149,11 +155,13 @@ namespace BattleArena
 
         private void Update()
         {
+            // if your health is 0, end the game and exit the loop
             if (player.Health == 0)
             {
                 _gameOver = true;
                 return;
             }
+            // otherwise give the player their turn
             else
             {
                 int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal"});
@@ -171,12 +179,13 @@ namespace BattleArena
             
 
             
-
+            // if the enemy's health is 0, end the game and exit the loop
             if (enemy.Health == 0)
             {
                 _gameOver = true;
                 return;
             }
+            // otherwise, let the enemy attack
             else
             {
                 enemy.Attack(player);
@@ -186,6 +195,7 @@ namespace BattleArena
 
         private void End()
         {
+            // if the enemy died, print you win!!!!!!!! otherwise print you lost!!!!!!!
             Console.Clear();
             if (enemy.Health == 0)
             {

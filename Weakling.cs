@@ -10,6 +10,8 @@ namespace BattleArena
 {
     internal class Weakling : Enemy
     {
+
+        // buncha stats
         public Weakling()
         {
             Name = "Weakling";
@@ -32,8 +34,11 @@ namespace BattleArena
 
         public override float Attack(Character target)
         {
+
+            // roll a 1 in 4 chance
             int d4Roll = RandomNumberGenerator.GetInt32(1, 5);
 
+            // if it wasnt a 1, the weakling does not attack
             if (!(d4Roll == 1))
             {
                 Console.WriteLine(Name + " tried to attack, but was too scared to follow through!");

@@ -35,6 +35,8 @@ namespace BattleArena
 
         public override float Attack(Character target)
         {
+
+            // if the charger is charging, print a lil' bit of cool fun flavor text and dont attack
             if (_isCharging == true)
             {
                 Console.WriteLine(Name + " is charging up after its last attack...");
@@ -42,6 +44,7 @@ namespace BattleArena
                 _isCharging = false;
                 return 0;
             }
+            // otherwise, do attack!
             else
             {
                 _isCharging = true;
