@@ -32,11 +32,12 @@ namespace BattleArena
 
         public override float Attack(Character target)
         {
-            int coinFlip = RandomNumberGenerator.GetInt32(1, 3);
+            int d4Roll = RandomNumberGenerator.GetInt32(1, 5);
 
-            if (coinFlip == 1)
+            if (!(d4Roll == 1))
             {
                 Console.WriteLine(Name + " tried to attack, but was too scared to follow through!");
+                Console.WriteLine(target.Name + "'s Health: " + target.Health + "/" + target.MaxHealth);
                 return 0;
             }
             else

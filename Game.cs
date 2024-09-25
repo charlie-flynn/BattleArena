@@ -9,7 +9,7 @@ namespace BattleArena
 {
     internal class Game
     {
-        Character player;
+        Player player;
         Character enemy;
         private bool _gameOver = false;
 
@@ -123,21 +123,21 @@ namespace BattleArena
 
         private void Start()
         {
-            int input = GetInput("Choose your opponent!", new string[] { "Weakling", "Vampire", "Charger" });
+            int input = GetInput("Choose your opponent!", new string[] { "The Weakling", "The Vampire", "The Charger" });
 
-            player = new Character(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
+            player = new Player(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
 
             if (input == 1)
             {
-                enemy = new Weakling(name: "Enemy", maxHealth: 100, attackPower: 9, defensePower: 5);
+                enemy = new Weakling(name: "Wimpy Wartrew", maxHealth: 100, attackPower: 9, defensePower: 0);
             }
             else if (input == 2)
             {
-                enemy = new Vampire(name: "Enemy", maxHealth: 100, attackPower: 9, defensePower: 5);
+                enemy = new Vampire(name: "Dracula 2", maxHealth: 100, attackPower: 9, defensePower: 5);
             }
             else if (input == 3)
             {
-                enemy = new Charger(name: "Enemy", maxHealth: 100, attackPower: 9, defensePower: 5);
+                enemy = new Charger(name: "USB-C You In Hell", maxHealth: 100, attackPower: 18, defensePower: 5);
             }
 
             player.PrintStats();
