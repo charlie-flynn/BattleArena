@@ -13,6 +13,7 @@ namespace BattleArena
         Character enemy;
         private bool _gameOver = false;
 
+        // keeping this here just in case i need it
         private int GetInput(string description, string option1, string option2)
         {
             ConsoleKeyInfo key;
@@ -58,8 +59,61 @@ namespace BattleArena
             return inputRecieved;
         }
 
+
+        private int GetInput(string description, string[] options)
+        {
+            ConsoleKeyInfo key;
+            string playerInput;
+            int inputRecieved = 0;
+
+           
+            while (inputRecieved <= 0 || inputRecieved > options.Length)
+            {
+                // clear the console, then print out the description and options
+                Console.Clear();
+                Console.WriteLine(description);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    Console.WriteLine((i + 1) + ". " + options[i]);
+                }
+
+                // prompt the player to type in an option
+                Console.Write("> ");
+
+                // if there's less than nine options, just read the next key the player presses
+                if (options.Length < 9)
+                {
+                    key = Console.ReadKey();
+                    playerInput = char.ToString(key.KeyChar);
+                }
+                // otherwise, read the next line they type
+                else
+                {
+                    playerInput = Console.ReadLine();
+                }
+
+                // if the input is a number, greater than zero, and less than or equal to the length of the array
+                if (int.TryParse(playerInput, out int num) && num <= options.Length && num > 0)
+                {
+                    // set input recieved to num
+                    inputRecieved = num;
+                    Console.WriteLine();
+                }
+                // otherwise, print an error message
+                else
+                {
+                    Console.WriteLine("\nInvalid Input");
+                    Console.ReadKey();
+                }
+            }
+            return inputRecieved;
+        }
+
         private void Start()
         {
+            int input = GetInput("test desc", new string[] {"test", "other test", "really cool test", "test 4", "test 5", "Test6", "TEST 7", "test 8", "test 9", "test 10", "test 11"});
+            Console.WriteLine(input);
+
             player = new Character(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
             enemy = new Character(name: "Enemy", maxHealth: 100, attackPower: 9, defensePower: 5);
 
@@ -79,7 +133,7 @@ namespace BattleArena
             }
             else
             {
-                int input = GetInput("Your turn, what will you do?", "Attack", "Heal");
+                int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal"});
                 if (input == 1)
                 {
                     float damage = player.Attack(enemy);
