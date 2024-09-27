@@ -13,9 +13,22 @@ namespace BattleArena
         {
             Name = name;
         }
-        public string Name { get { return _name; } protected set { } }
+        public string Name 
+        { 
+            get { return _name; } 
+
+            private set { _name = value; } 
+        }
 
 
-        protected abstract void ApplyItemEffect(Character itemUser);
+        public abstract void ApplyItemEffect(Player itemUser);
+
+        protected void ConsumeItem(Player itemUser)
+        {
+            // find the index of the item in the right inventory, then print a message and replace the item with an empty slot
+            int index = Array.IndexOf(itemUser.Inventory, this);
+            Console.WriteLine("The " + itemUser.Inventory[index].Name + " was consumed!");
+            itemUser.Inventory[index] = new EmptySlot();
+        }
     }
 }

@@ -79,7 +79,10 @@ namespace BattleArena
             // ask the player what enemy they want to fight
             int input = GetInput("Choose your opponent!", new string[] { "The Weakling", "The Vampire", "The Charger" });
 
+            // initialize the player
             player = new Player(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
+            player.GainItem(new HealthPotion());
+
 
 
             // if they chose 1, bring out the weakling whose name is Wimpy Wartrew and has 100 health, 9 attack, and 0 defense
@@ -116,20 +119,25 @@ namespace BattleArena
             // otherwise give the player their turn
             else
             {
-                int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal"});
+                int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal", "Item"});
                 if (input == 1)
                 {
                     float damage = player.Attack(enemy);
                 }
-                else
+                else if (input == 2)
                 {
                     player.Heal(10);
+                }
+                else
+                {
+                    input = GetInput("What item will you use?", player.GetInventoryNames());
+                    player.Inventory[input - 1].ApplyItemEffect(player);
                 }
                 Console.ReadKey();
                 Console.Clear();
             }
             
-
+            // a keyboard has 104 buttons
             
             // if the enemy's health is 0, end the game and exit the loop
             if (enemy.Health == 0)
