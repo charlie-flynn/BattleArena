@@ -9,9 +9,13 @@ namespace BattleArena
     internal abstract class Item
     {
         private string _name = " ";
-        public Item(string name)
+        private bool _isTargetted = false;
+        private Character nullTarget;
+        
+        public Item(string name, bool targetsEnemy)
         {
             Name = name;
+            _isTargetted = targetsEnemy;
         }
         public string Name 
         { 
@@ -19,8 +23,10 @@ namespace BattleArena
 
             private set { _name = value; } 
         }
+        public bool IsTargetted { get { return _isTargetted; } }
 
-
+        
+        // i really wanna have an optional argument for the target of the item but i just dont know how to do it??? ugh, ill do it monday im sure
         public abstract void ApplyItemEffect(Player itemUser);
 
         protected void ConsumeItem(Player itemUser)

@@ -9,14 +9,14 @@ namespace BattleArena
     internal class EmptySlot : Item
     {
         private string _name = " ";
-        public EmptySlot() : base(name: " ") { }
+        public EmptySlot() : base(name: " ", false) { }
 
 
 
 
         public override void ApplyItemEffect(Player itemUser)
         {
-            Console.WriteLine(itemUser + " tried to use nothing... But nothing happened!");
+            Console.WriteLine(itemUser.Name + " tried to use nothing... But nothing happened!");
         }
     }
 }

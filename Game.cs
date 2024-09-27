@@ -9,8 +9,8 @@ namespace BattleArena
 {
     internal class Game
     {
-        Player player;
-        Character enemy;
+        private Player player;
+        private Character enemy;
         private bool _gameOver = false;
         private int GetInput(string description, string[] options)
         {
@@ -73,6 +73,22 @@ namespace BattleArena
             return inputRecieved;
         }
 
+        private void UseItem(Item item, Player itemUser, bool targetsEnemy)
+        {
+            // check if the item targets the enemy
+            // if it does, use the item with the override for targetting enemies
+            // otherwise, use the override that only uses it on the player
+
+            if (item.IsTargetted)
+            {
+                item.ApplyItemEffect(itemUser);
+            }
+            else
+            {
+                item.ApplyItemEffect(itemUser);
+            }
+        }
+
         private void Start()
         {
 
@@ -117,6 +133,8 @@ namespace BattleArena
                 return;
             }
             // otherwise give the player their turn
+
+            // if you input 1, you attack. when you input 2, you heal 10 health. when you input 3, you open your inventory and choose an item to use1
             else
             {
                 int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal", "Item"});
@@ -136,8 +154,6 @@ namespace BattleArena
                 Console.ReadKey();
                 Console.Clear();
             }
-            
-            // a keyboard has 104 buttons
             
             // if the enemy's health is 0, end the game and exit the loop
             if (enemy.Health == 0)
