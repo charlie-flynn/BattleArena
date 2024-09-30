@@ -37,6 +37,7 @@ namespace BattleArena
 
         public override float Attack(Character target)
         {
+            // if the countdown is greater than 0, count it down by one.
             if (ChargePower > 0)
             {
                 Console.WriteLine(Name + " is charging a devastating attack...");
@@ -50,6 +51,7 @@ namespace BattleArena
                 }
                 ChargePower--;
             }
+            // if the countdown is 0, unleash the R.I.C.K. Blast, which backfires to deal 999998 damage and lower R.I.C.K.'s defense to 9
             else if (ChargePower == 0)
             {
                 Console.WriteLine(Name + " unleashed its R.I.C.K. Blast!");
@@ -59,6 +61,7 @@ namespace BattleArena
                 DefensePower = 9;
                 ChargePower--;
             }
+            // if the countdown is less than 0, print a little bit of flavor text and do nothing whatsoever
             else
             {
                 Console.WriteLine(Name + " is dazed after the impact of the R.I.C.K. Blast!");
