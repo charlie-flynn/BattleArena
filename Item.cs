@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace BattleArena
     {
         private string _name = " ";
         private bool _isTargetted = false;
-        private Character nullTarget;
         
         public Item(string name, bool targetsEnemy)
         {
@@ -26,8 +26,7 @@ namespace BattleArena
         public bool IsTargetted { get { return _isTargetted; } }
 
         
-        // i really wanna have an optional argument for the target of the item but i just dont know how to do it??? ugh, ill do it monday im sure
-        public abstract void ApplyItemEffect(Player itemUser);
+        public abstract void ApplyItemEffect(Player itemUser, Character itemTarget = default);
 
         protected void ConsumeItem(Player itemUser)
         {

@@ -62,13 +62,13 @@ namespace BattleArena
             if (fullSlots == Inventory.Length)
             {
                 Console.WriteLine("...But your inventory is full!");
-                Console.WriteLine("You discard the");
+                Console.WriteLine("You discard the " + item.Name + ".");
             }
             else
             {
                 Inventory[slot] = item;
             }
-
+            Console.ReadKey();
 
         }
     }

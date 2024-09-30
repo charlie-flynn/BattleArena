@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,15 +11,16 @@ namespace BattleArena
     internal class Game
     {
         private Player player;
-        private Character enemy;
+        private Enemy enemy;
+        private Enemy[] enemies;
         private bool _gameOver = false;
+        private int enemyIndex;
+        private int enemiesKilled = 0;
         private int GetInput(string description, string[] options)
         {
             ConsoleKeyInfo key;
-            string playerInput;
             int inputRecieved = 0;
 
-           
             while (inputRecieved <= 0 || inputRecieved > options.Length)
             {
                 // clear the console, then print out the description and options
@@ -29,92 +31,72 @@ namespace BattleArena
                     Console.WriteLine((i + 1) + ". " + options[i]);
                 }
 
-                // prompt the player to type in an option
+                // prompt the player to type in an option (we shouldnt need more than 9 options ever so just read key)
                 Console.Write("> ");
-
-                // if there's less than nine options, just read the next key the player presses
-                if (options.Length < 9)
-                {
-                    key = Console.ReadKey();
-                    playerInput = char.ToString(key.KeyChar);
-                }
-                // otherwise, read the next line they type
-                else
-                {
-                    playerInput = Console.ReadLine();
-                }
+                key = Console.ReadKey();
+                Console.WriteLine();
 
                 // if the input is a number, greater than zero, and less than or equal to the length of the array
-                if (int.TryParse(playerInput, out int num) && num <= options.Length && num > 0)
+                if (int.TryParse(key.KeyChar.ToString(), out int num) && num <= options.Length && num > 0)
                 {
                     // set input recieved to num
                     inputRecieved = num;
 
-                    // if the amount of options are less than 9, write an empty line
-                    if (options.Length < 9)
-                    {
-                        Console.WriteLine();  
-                    }
                    
                 }
                 // otherwise, print an error message
                 else
                 {
-
-                    // if the amount of options are less than 9, write an empty line
-                    if (options.Length < 9)
-                    {
-                        Console.WriteLine();
-                    }
                     Console.WriteLine("Invalid Input");
                     Console.ReadKey();
                 }
             }
             return inputRecieved;
         }
-
-        private void UseItem(Item item, Player itemUser, bool targetsEnemy)
+        private string[] GetAliveEnemyNames(Enemy[] enemies)
         {
-            // check if the item targets the enemy
-            // if it does, use the item with the override for targetting enemies
-            // otherwise, use the override that only uses it on the player
+            string[] names = new string[enemies.Length];
 
-            if (item.IsTargetted)
+            for (int i = 0; i < enemies.Length; i++)
             {
-                item.ApplyItemEffect(itemUser);
+                if (!enemies[i].IsDead)
+                {
+                    names[i] = enemies[i].Name;
+                }
+                else
+                {
+                    names[i] = "(X) " + enemies[i].Name;
+                }
+                
             }
-            else
-            {
-                item.ApplyItemEffect(itemUser);
-            }
+
+            return names;
         }
-
         private void Start()
         {
-
+            enemies = new Enemy[]
+            {
+                new Weakling(name: "Wimpy Wartrew", maxHealth: 100, attackPower: 9, defensePower: 0),
+                new Vampire(name: "Dracula 2", maxHealth: 80, attackPower: 9, defensePower: 5),
+                new Charger(name: "Blastholomew", maxHealth: 100, attackPower: 18, defensePower: 5)
+            };
             // ask the player what enemy they want to fight
-            int input = GetInput("Choose your opponent!", new string[] { "The Weakling", "The Vampire", "The Charger" });
+            int input = GetInput("Choose your opponent!", GetAliveEnemyNames(enemies));
 
             // initialize the player
             player = new Player(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
+            Console.WriteLine();
+            Console.WriteLine("Here's a couple freebies, use them wisely!");
             player.GainItem(new HealthPotion());
+            player.GainItem(new BlastInABottle());
+            Console.WriteLine();
 
 
 
             // if they chose 1, bring out the weakling whose name is Wimpy Wartrew and has 100 health, 9 attack, and 0 defense
             // if they choose 2, bring out the vampire whose name is dracula 2, has 100 health, etc. etc. etc.
-            if (input == 1)
-            {
-                enemy = new Weakling(name: "Wimpy Wartrew", maxHealth: 100, attackPower: 9, defensePower: 0);
-            }
-            else if (input == 2)
-            {
-                enemy = new Vampire(name: "Dracula 2", maxHealth: 100, attackPower: 9, defensePower: 5);
-            }
-            else if (input == 3)
-            {
-                enemy = new Charger(name: "USB-C You In Hell", maxHealth: 100, attackPower: 18, defensePower: 5);
-            }
+            enemyIndex = input - 1;
+            enemy = enemies[enemyIndex];
 
             // print the player's stats, and the enemy's stats
             player.PrintStats();
@@ -134,10 +116,10 @@ namespace BattleArena
             }
             // otherwise give the player their turn
 
-            // if you input 1, you attack. when you input 2, you heal 10 health. when you input 3, you open your inventory and choose an item to use1
+            // if you input 1, you attack. when you input 2, you heal 10 health. when you input 3, you open your inventory and choose an item to use
             else
             {
-                int input = GetInput("Your turn, what will you do?", new string[] {"Attack", "Heal", "Item"});
+                int input = GetInput("Your turn, what will you do?", ["Attack", "Heal", "Item"]);
                 if (input == 1)
                 {
                     float damage = player.Attack(enemy);
@@ -149,19 +131,83 @@ namespace BattleArena
                 else
                 {
                     input = GetInput("What item will you use?", player.GetInventoryNames());
-                    player.Inventory[input - 1].ApplyItemEffect(player);
+                    player.Inventory[input - 1].ApplyItemEffect(player, enemy);
                 }
                 Console.ReadKey();
                 Console.Clear();
             }
             
-            // if the enemy's health is 0, end the game and exit the loop
+            // if the enemy's health is 0, prompt the player to choose an item, then choose their next enemy. otherwise, let the enemy attack
             if (enemy.Health == 0)
             {
-                _gameOver = true;
-                return;
+                
+                enemy.IsDead = true;
+                enemies[enemyIndex].IsDead = true;
+                enemiesKilled++;
+
+                // if they've killed all enemies including the final boss, end the game
+                if (enemiesKilled > enemies.Length)
+                {
+                    _gameOver = true;
+                    return;
+                }
+
+                // let the player choose an item
+                int input = GetInput("What item do you need?", ["Health Potion", "Blast in a Bottle"]);
+                if (input == 1)
+                {
+                    player.GainItem(new HealthPotion());
+                }
+                else
+                {
+                    player.GainItem(new BlastInABottle());
+                }
+
+                // prepare the player emotionally for the final boss
+                if (enemiesKilled == enemies.Length)
+                {
+                    Console.Clear();
+                    Console.WriteLine("It's time to face your final opponent...");
+                    Console.ReadKey();
+                    input = GetInput("Are you ready?", ["Yes", "No"]);
+                    if (input == 1)
+                    {
+                        Console.WriteLine("Good.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("TOO BAD LOL GET READY TO GET GOT");
+                    }
+                    enemy = new Rick("Royally Infallible Cannon of Killing", 999999, 999999, 999999);
+                    player.PrintStats();
+                    Console.WriteLine();
+                    enemy.PrintStats();
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                else
+                {
+                    while (enemy.IsDead)
+                    {
+                        input = GetInput("Choose your next foe", GetAliveEnemyNames(enemies));
+                        enemyIndex = input - 1;
+                        enemy = enemies[enemyIndex];
+                        if (enemy.IsDead)
+                        {
+                            Console.WriteLine("You have already slain that foe...");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            player.PrintStats();
+                            Console.WriteLine();
+                            enemy.PrintStats();
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
             }
-            // otherwise, let the enemy attack
             else
             {
                 enemy.Attack(player);

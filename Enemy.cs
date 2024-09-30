@@ -8,8 +8,7 @@ namespace BattleArena
 {
     internal abstract class Enemy : Character
     {
-        // i dont think there needs to be much else here ????
-        // idk ???????????????????????
+        // not much here really
         public Enemy() : base()
         {
 

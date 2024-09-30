@@ -47,18 +47,20 @@ namespace BattleArena
         }
         public float MaxHealth { get { return _maxHealth; } protected set { } }
         public float AttackPower { get { return _attackPower; } protected set { } }
-        public float DefensePower { get { return _defensePower; } protected set { } }
+        public float DefensePower { get { return _defensePower; } protected set { _defensePower = value; } }
         public string Name { get { return _name; } protected set { } }
-        public bool IsDead { get { return _isDead; } protected set { } }
+        public bool IsDead { get { return _isDead; } set { } }
 
 
 
         public virtual float Attack(Character target)
         {
+            // attack the enemy for the character's attack power - the target's defense power
             float damage = Math.Max(0, _attackPower - target.DefensePower);
             Console.WriteLine(Name + " attacked " + target.Name + " for " + damage + " damage!");
             target.TakeDamage(damage);
 
+            // if their health is higher than 0, print out their health
             if (target.Health > 0)
             {
                 Console.WriteLine(target.Name + "'s Health: " + target.Health + "/" + target.MaxHealth);
@@ -69,6 +71,7 @@ namespace BattleArena
 
         public virtual void TakeDamage(float damage)
         {
+            // take damaage, if the character's health is 0, they die
             Health -= damage;
             if (Health == 0)
             {
@@ -78,6 +81,7 @@ namespace BattleArena
 
         public void Heal(float health)
         {
+            // gain health
             Health += health;
             Console.WriteLine(Name + " healed " + health + " health!");
             Console.WriteLine(Name + "'s health: " + Health + "/" + MaxHealth);
@@ -85,12 +89,14 @@ namespace BattleArena
 
         private void Die()
         {
+            // die
             Console.WriteLine(Name + " has died!");
             _isDead = true;
         }
 
         public void PrintStats()
         {
+            // print all the character's stats
             Console.WriteLine("Name:          " + Name);
             Console.WriteLine("Health:        " + Health + "/" + MaxHealth);
             Console.WriteLine("Attack Power:  " + AttackPower);
