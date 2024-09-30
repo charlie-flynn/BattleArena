@@ -178,7 +178,7 @@ namespace BattleArena
                     {
                         Console.WriteLine("TOO BAD LOL GET READY TO GET GOT");
                     }
-                    enemy = new Rick("Royally Infallible Cannon of Killing", 999999, 999999, 999999);
+                    enemy = new Rick("The Royally Infallible Cannon of Killing", 999999, 999999, 999999);
                     player.PrintStats();
                     Console.WriteLine();
                     enemy.PrintStats();

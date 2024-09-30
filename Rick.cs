@@ -37,7 +37,7 @@ namespace BattleArena
 
         public override float Attack(Character target)
         {
-            if (ChargePower != 0)
+            if (ChargePower > 0)
             {
                 Console.WriteLine(Name + " is charging a devastating attack...");
                 if (ChargePower > 1)
@@ -50,13 +50,18 @@ namespace BattleArena
                 }
                 ChargePower--;
             }
-            else
+            else if (ChargePower == 0)
             {
                 Console.WriteLine(Name + " unleashed its R.I.C.K. Blast!");
                 Console.WriteLine("But it backfired! " + Name + " took 999998 damage!");
                 TakeDamage(999998);
                 Console.WriteLine(Name + "'s health: " + Health + "/" + MaxHealth);
                 DefensePower = 9;
+                ChargePower--;
+            }
+            else
+            {
+                Console.WriteLine(Name + " is dazed after the impact of the R.I.C.K. Blast!");
             }
 
 
