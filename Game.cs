@@ -36,10 +36,9 @@ namespace BattleArena
                 key = Console.ReadKey();
                 Console.WriteLine();
 
-                // if the input is a number, greater than zero, and less than or equal to the length of the array
+                // if the input is a number, greater than zero, and less than or equal to the length of the array, set input recieved to the input
                 if (int.TryParse(key.KeyChar.ToString(), out int num) && num <= options.Length && num > 0)
                 {
-                    // set input recieved to num
                     inputRecieved = num;
 
                    
@@ -189,6 +188,7 @@ namespace BattleArena
                 {
                     while (enemy.IsDead)
                     {
+                        // let the player choose their next foe as long as said foe is alive
                         input = GetInput("Choose your next foe", GetAliveEnemyNames(enemies));
                         enemyIndex = input - 1;
                         enemy = enemies[enemyIndex];
