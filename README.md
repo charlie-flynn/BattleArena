@@ -2,7 +2,7 @@ Classes and Objects assignement for AIE.
 
 Download the program [here,](https://github.com/charlie-flynn/BattleArena/releases) then clicking on the .zip file at the top of the Assets list to download it!
 
-Then right-click the .ZIP, and click Extract All.
+Then right-click the .ZIP that is in your downloads folder, and click Extract All.
 
 Afterwards, you're good to run the executable (.exe) file in the folder!
 
