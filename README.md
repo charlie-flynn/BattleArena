@@ -1,6 +1,6 @@
 Classes and Objects assignement for AIE.
 
-Download the program [here!](https://github.com/charlie-flynn/BattleArena/releases)
+Download the program [here,](https://github.com/charlie-flynn/BattleArena/releases) then clicking on the .zip file at the top of the Assets list to download it!
 
 Then right-click the .ZIP, and click Extract All.
 
