@@ -14,7 +14,7 @@ namespace BattleArena
 
 
 
-        public override void ApplyItemEffect(Player itemUser, Character itemTarget = default)
+        public override void ApplyItemEffect(Player itemUser, Character itemTarget)
         {
             Console.WriteLine(itemUser.Name + " tried to use nothing... But nothing happened!");
         }

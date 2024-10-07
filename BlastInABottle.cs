@@ -12,8 +12,9 @@ namespace BattleArena
 
         public override void ApplyItemEffect(Player itemUser, Character itemTarget)
         {
-            // deal 25 damage to target
             Console.WriteLine(itemUser.Name + " used the Blast in a Bottle!");
+
+            // if the enemy has a comical amount of health, do nothing. otherwise deal 25 damage
             if (itemTarget.Health > 999998)
             {
                 Console.WriteLine("But " + itemTarget.Name + " was unfazed.");

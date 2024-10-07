@@ -82,7 +82,7 @@ namespace BattleArena
             // ask the player what enemy they want to fight
             int input = GetInput("Choose your opponent!", GetAliveEnemyNames(enemies));
 
-            // initialize the player
+            // initialize the player and give them some items
             player = new Player(name: "Player", maxHealth: 100, attackPower: 10, defensePower: 5);
             Console.WriteLine();
             Console.WriteLine("Here's a couple freebies, use them wisely!");

@@ -44,8 +44,10 @@ namespace BattleArena
             int slot = 0;
             int fullSlots = 0;
 
+            // print out a message that you got a new item
             Console.WriteLine("You got a " + item.Name + "!");
 
+            // check all of the slots in your inventory for an empty slot to put the new item in
             for (int i = 0; i < Inventory.Length; i++)
             {
                 if (Inventory[i].Name == " ")
@@ -59,6 +61,7 @@ namespace BattleArena
                 }
             }
 
+            // if your inventory was full, you discard the item. otherwise put the new item into the nearest empty slot
             if (fullSlots == Inventory.Length)
             {
                 Console.WriteLine("...But your inventory is full!");
