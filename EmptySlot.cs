@@ -9,7 +9,7 @@ namespace BattleArena
     internal class EmptySlot : Item
     {
         private string _name = " ";
-        public EmptySlot() : base(name: " ", false) { }
+        public EmptySlot() : base(name: " ") { }
 
 
 
