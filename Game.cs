@@ -40,9 +40,8 @@ namespace BattleArena
                 if (int.TryParse(key.KeyChar.ToString(), out int num) && num <= options.Length && num > 0)
                 {
                     inputRecieved = num;
-
-                   
                 }
+
                 // otherwise, print an error message
                 else
                 {
@@ -56,6 +55,7 @@ namespace BattleArena
         {
             string[] names = new string[enemies.Length];
 
+            // for every enemy, if the enemy is dead put a little x in front of its name and put its name in a string array
             for (int i = 0; i < enemies.Length; i++)
             {
                 if (!enemies[i].IsDead)
@@ -217,7 +217,7 @@ namespace BattleArena
 
         private void End()
         {
-            // if the enemy died, print you win!!!!!!!! otherwise print you lost!!!!!!!
+            // if you didnt die, print you win!!!!!!!! otherwise print you lost!!!!!!!
             Console.Clear();
             if (enemy.Health == 0)
             {

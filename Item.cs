@@ -10,12 +10,10 @@ namespace BattleArena
     internal abstract class Item
     {
         private string _name = " ";
-        private bool _isTargetted = false;
         
-        public Item(string name, bool targetsEnemy)
+        public Item(string name)
         {
             Name = name;
-            _isTargetted = targetsEnemy;
         }
         public string Name 
         { 
@@ -23,10 +21,9 @@ namespace BattleArena
 
             private set { _name = value; } 
         }
-        public bool IsTargetted { get { return _isTargetted; } }
 
         
-        public abstract void ApplyItemEffect(Player itemUser, Character itemTarget = default);
+        public abstract void ApplyItemEffect(Player itemUser, Character itemTarget);
 
         protected void ConsumeItem(Player itemUser)
         {

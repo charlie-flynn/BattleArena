@@ -9,8 +9,8 @@ namespace BattleArena
 {
     internal class HealthPotion : Item
     {
-        public HealthPotion() : base(name: "Health Potion", targetsEnemy: false) { }
-        public override void ApplyItemEffect(Player itemUser, Character itemTarget = default)
+        public HealthPotion() : base(name: "Health Potion") { }
+        public override void ApplyItemEffect(Player itemUser, Character itemTarget)
         {
             // heal the user for 25 health
             itemUser.Heal(25);

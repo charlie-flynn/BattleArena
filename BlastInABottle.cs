@@ -8,9 +8,9 @@ namespace BattleArena
 {
     internal class BlastInABottle : Item
     {
-        public BlastInABottle() : base(name: "Blast in a Bottle", true) { }
+        public BlastInABottle() : base(name: "Blast in a Bottle") { }
 
-        public override void ApplyItemEffect(Player itemUser, Character itemTarget = default)
+        public override void ApplyItemEffect(Player itemUser, Character itemTarget)
         {
             // deal 25 damage to target
             Console.WriteLine(itemUser.Name + " used the Blast in a Bottle!");
